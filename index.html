@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Buon Compleanno, Papa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{--green:#2F5D3A;--leaf:#2F7A45;--red:#B5523B;--flag:#C0392B;--gold:#C9A24B;--ink:#2B2A26;--brown:#6B5B3E;--cream:#FBF7F0;--paper:#FFFDF8;--line:#E6DDD0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--cream);color:var(--ink);font:500 21px/1.4 'Cormorant Garamond',Georgia,serif;-webkit-font-smoothing:antialiased}
+.shell{min-height:100%;display:flex;flex-direction:column;max-width:680px;margin:0 auto;padding:0 18px calc(18px + env(safe-area-inset-bottom))}
+.flag{height:7px;display:flex;margin:0 -18px}
+.flag span{flex:1}.flag .g{background:var(--leaf)}.flag .w{background:#fff}.flag .r{background:var(--flag)}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 2px 6px;color:var(--brown);font-size:17px}
+.dots{display:flex;gap:6px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);transition:background .3s,transform .3s}
+.dots i.on{background:var(--gold)}.dots i.now{background:var(--red);transform:scale(1.25)}
+.card{flex:1;background:var(--paper);border:1.5px solid var(--gold);border-radius:6px;padding:26px 22px 22px;margin:8px 0 14px;box-shadow:0 1px 0 #fff inset,0 10px 30px -18px rgba(80,60,20,.35);position:relative}
+.card:before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,162,75,.35);border-radius:3px;pointer-events:none}
+.step{display:none;animation:in .35s ease}
+.step.show{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kicker{font:600 13px 'Playfair Display',serif;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:0 0 6px}
+h1{font:700 40px/1.08 'Playfair Display',serif;color:var(--green);margin:0 0 10px}
+h2{font:600 29px/1.15 'Playfair Display',serif;color:var(--green);margin:0 0 6px}
+.script{font-family:'Great Vibes',cursive;color:var(--red);font-size:46px;line-height:1;margin:4px 0 8px}
+.hint{color:var(--brown);font-style:italic;margin:0 0 16px;font-size:19px}
+p{margin:0 0 12px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:600 21px/1.25 'Cormorant Garamond',Georgia,serif;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;min-height:62px;cursor:pointer;transition:border-color .2s,background .2s,transform .1s}
+.opt:active{transform:scale(.985)}
+.opt .box{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid #CFC3AE;display:grid;place-items:center;transition:all .2s;background:#fff}
+.opt.radio .box{border-radius:50%}
+.opt .box svg{width:18px;height:18px;opacity:0;transform:scale(.5);transition:all .2s}
+.opt[aria-pressed=true]{border-color:var(--leaf);background:#F3F8F3}
+.opt[aria-pressed=true] .box{background:var(--leaf);border-color:var(--leaf)}
+.opt[aria-pressed=true] .box svg{opacity:1;transform:none}
+.opt small{display:block;font-weight:500;font-style:italic;color:var(--brown);font-size:17px}
+textarea{width:100%;min-height:150px;font:500 21px/1.4 'Cormorant Garamond',Georgia,serif;color:var(--ink);border:1.5px solid var(--line);border-radius:12px;padding:14px;background:#fff;resize:vertical}
+textarea:focus,.opt:focus-visible,.btn:focus-visible{outline:3px solid rgba(47,122,69,.35);outline-offset:2px}
+.nav{display:flex;gap:10px;padding-bottom:6px}
+.btn{flex:1;font:600 20px 'Playfair Display',serif;border-radius:40px;padding:16px 18px;min-height:60px;border:0;cursor:pointer;transition:transform .1s,opacity .2s}
+.btn:active{transform:scale(.98)}
+.go{background:var(--green);color:#fff;box-shadow:0 6px 16px -8px rgba(47,93,58,.8)}
+.back{flex:0 0 auto;background:transparent;color:var(--brown);border:1.5px solid var(--line);padding:16px 22px}
+.btn[disabled]{opacity:.4}
+.big{display:block;width:100%;margin:0 0 10px;text-decoration:none;text-align:center}
+.red{background:var(--red);color:#fff}
+.ghost{background:#fff;color:var(--green);border:1.5px solid var(--green)}
+.sum{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:8px 0 16px;font-size:19px}
+.sum b{font:600 13px 'Playfair Display',serif;letter-spacing:2px;text-transform:uppercase;color:var(--red);display:block;margin-top:10px}
+.sum b:first-child{margin-top:0}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:30px;font-size:18px;opacity:0;transition:all .3s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.flourish{color:var(--gold);letter-spacing:8px;text-align:center;margin:6px 0 14px;font-size:14px}
+.small{font-size:17px;color:var(--brown)}
+@media print{
+  body{background:#fff}.top,.nav,.flag,.noprint,.toast{display:none!important}
+  .card{border:none;box-shadow:none;padding:0}.card:before{display:none}
+  .step{display:none!important}.step.final{display:block!important}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="flag"><span class="g"></span><span class="w"></span><span class="r"></span></div>
+  <div class="top"><span id="where">Benvenuto</span><div class="dots" id="dots"></div></div>
+  <main class="card" id="card"></main>
+  <div class="nav" id="nav">
+    <button class="btn back" id="back" type="button">Back</button>
+    <button class="btn go" id="next" type="button">Let's begin</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const BOT = "https://t.me/ophir_eliezer_bot";
+const Q = [
+ {id:"who", type:"one", kicker:"First", title:"Who's answering today?", hint:"Tap one.",
+  opts:["Papa","Mom","Both of us, together"]},
+ {id:"home", type:"many", kicker:"Around the house", title:"What would make home easier?", hint:"Tap as many as you like.",
+  opts:[["Lights that turn on and off by themselves","porch, hallway, bedtime"],["Just-right temperature","without fiddling with the thermostat"],["Seeing who's at the door","from your phone or a screen"],["Locking up without getting up",""],["Keeping an eye on the house while we're away",""],["Music or the radio by asking for it",""],["Surprise me, James knows best",""]]},
+ {id:"help", type:"many", kicker:"Your helper", title:"What should your helper do for you?", hint:"Pick the ones you'd actually use.",
+  opts:[["Remind me","pills, appointments, birthdays"],["Answer my questions",""],["Write or read emails and letters",""],["Print things for me","recipes, tickets, forms"],["Fix the computer when it acts up",""],["Find and share photos",""],["Keep the calendar",""],["Recipes and cooking",""],["Sports scores and news",""],["Scripture and devotions",""]]},
+ {id:"talk", type:"many", kicker:"Talking to it", title:"How would you like to ask?", hint:"Tap all that sound good.",
+  opts:[["Say it out loud","like talking to a person in the room"],["Send a text message","from my phone"],["Send an email",""],["Tap a screen on the wall or counter",""]]},
+ {id:"have", type:"many", kicker:"What you have now", title:"Which of these do you use?", hint:"So James knows what's already in the house.",
+  opts:["iPhone","Android phone","iPad or tablet","Windows computer","Alexa or Google speaker","Smart TV","Nest thermostat or camera","Ring or another doorbell camera","Not sure"]},
+ {id:"comfort", type:"one", kicker:"Honestly", title:"How do you feel about new gadgets?", hint:"No wrong answers.",
+  opts:[["Keep it simple, please","I want it to just work"],["Happy if someone shows me once",""],["I like trying new things",""]]},
+ {id:"matters", type:"many", kicker:"What matters most", title:"What's most important to you?", hint:"Pick up to three.", max:3,
+  opts:["Simple to use","Private and secure","Works every single time","Low monthly cost","Looks nice in the house"]},
+ {id:"wish", type:"text", kicker:"Last one", title:"Anything that bugs you at home, or a wish?", hint:"Write as little or as much as you like. You can skip this."}
+];
+const LABEL = {who:"Answering",home:"Easier at home",help:"Helper should",talk:"Ask by",have:"Has now",comfort:"Gadgets",matters:"Matters most",wish:"Wish"};
+const KEY="papa-survey-v1";
+let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+let i = -1; // -1 intro, 0..n-1 questions, n final
+const card=document.getElementById("card"), next=document.getElementById("next"), back=document.getElementById("back"), dots=document.getElementById("dots"), where=document.getElementById("where");
+const tick='<svg viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>';
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(A))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function intro(){return `<div class="step show">
+ <div class="kicker">A gift from James</div>
+ <div class="script">Buon compleanno,</div>
+ <h1>Papa!</h1>
+ <div class="flourish">✦ ✦ ✦</div>
+ <p>Your gift is a helper for the house: someone you can ask to do things, and a home that looks after itself a little.</p>
+ <p>Before James sets it up, he'd love to know what <em>you</em> want. Eight quick questions, about three minutes. Just tap.</p>
+ <p class="small">Nothing is sent anywhere until you choose to send it at the end.</p></div>`}
+
+function question(q){
+ let h=`<div class="step show"><div class="kicker">${q.kicker}</div><h2>${q.title}</h2><p class="hint">${q.hint}</p>`;
+ if(q.type==="text"){h+=`<textarea id="t" placeholder="Type here…">${esc(A[q.id]||"")}</textarea>`}
+ else{h+=`<div class="opts">`+q.opts.map(o=>{const [t,s]=Array.isArray(o)?o:[o,""];const on=q.type==="one"?A[q.id]===t:(A[q.id]||[]).includes(t);
+   return `<button type="button" class="opt ${q.type==="one"?"radio":""}" aria-pressed="${on}" data-v="${esc(t)}"><span class="box">${tick}</span><span>${esc(t)}${s?`<small>${esc(s)}</small>`:""}</span></button>`}).join("")+`</div>`}
+ return h+`</div>`}
+
+function summaryText(){
+ const d=new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+ let t=`Papa's birthday gift answers (${d})\n`;
+ for(const q of Q){const v=A[q.id];if(!v||(Array.isArray(v)&&!v.length))continue;t+=`\n${LABEL[q.id]}: ${Array.isArray(v)?v.join("; "):v}`}
+ return t.trim()}
+function summaryHTML(){
+ let h="";for(const q of Q){const v=A[q.id];if(!v||(Array.isArray(v)&&!v.length))continue;h+=`<b>${LABEL[q.id]}</b>${esc(Array.isArray(v)?v.join(" · "):v)}`}
+ return h||"<i>No answers yet. Tap Back to go through the questions.</i>"}
+
+function final(){return `<div class="step show final">
+ <div class="kicker">Grazie mille</div>
+ <h2>That's everything!</h2>
+ <p class="hint">Here's what you told us. Send it to James and he'll take it from here.</p>
+ <div class="sum">${summaryHTML()}</div>
+ <div class="noprint">
+  <button class="btn go big" id="share" type="button">Send to James</button>
+  <button class="btn ghost big" id="copy" type="button">Copy my answers</button>
+  <button class="btn ghost big" id="print" type="button">Save or print a copy</button>
+  <div class="flourish">✦</div>
+  <p><b style="font-family:'Playfair Display',serif;color:var(--green)">Want to say hello to EZ?</b><br>EZ is the helper who'll look after the house with you. If you have Telegram, tap below and say "Hi, it's Papa." James will let EZ know it's you.</p>
+  <a class="btn red big" href="${BOT}" target="_blank" rel="noopener">Say hello to EZ</a>
+ </div></div>`}
+
+function render(){
+ const n=Q.length;
+ dots.innerHTML=Q.map((_,k)=>`<i class="${k<i?"on":k===i?"now":""}"></i>`).join("");
+ where.textContent=i<0?"Benvenuto":i>=n?"Finito":`Question ${i+1} of ${n}`;
+ card.innerHTML=i<0?intro():i>=n?final():question(Q[i]);
+ back.style.display=i<0?"none":"";
+ next.style.display=i>=n?"none":"";
+ next.textContent=i<0?"Let's begin":i===n-1?(A.wish?"Finish":"Skip and finish"):"Next";
+ if(i>=0&&i<n){
+  const q=Q[i];
+  if(q.type==="text"){const t=document.getElementById("t");t.oninput=()=>{A.wish=t.value;save();next.textContent=t.value.trim()?"Finish":"Skip and finish"}}
+  card.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+   const v=b.dataset.v;
+   if(q.type==="one"){A[q.id]=v;card.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",x===b));save();setTimeout(()=>{if(i<n&&Q[i]===q)go(1)},380);return}
+   let arr=A[q.id]||[];
+   if(arr.includes(v))arr=arr.filter(x=>x!==v);else{if(q.max&&arr.length>=q.max){toast(`Up to ${q.max}, please`);return}arr=[...arr,v]}
+   A[q.id]=arr;b.setAttribute("aria-pressed",arr.includes(v));save()});
+ }
+ if(i>=n){
+  document.getElementById("share").onclick=async()=>{const text=summaryText();
+   if(navigator.share){try{await navigator.share({title:"Papa's answers",text});return}catch(e){if(e.name==="AbortError")return}}
+   await copy(text);toast("Copied. Paste it into a text or email to James.")};
+  document.getElementById("copy").onclick=async()=>{await copy(summaryText());toast("Copied. Paste it into a text or email.")};
+  document.getElementById("print").onclick=()=>window.print();
+ }
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+async function copy(t){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("on"),2600)}
+function go(d){i=Math.max(-1,Math.min(Q.length,i+d));render()}
+next.onclick=()=>go(1);back.onclick=()=>go(-1);
+render();
+</script>
+</body>
+</html>

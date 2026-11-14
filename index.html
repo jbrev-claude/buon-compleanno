@@ -80,25 +80,41 @@ textarea:focus,.opt:focus-visible,.btn:focus-visible{outline:3px solid rgba(47,1
 
 <script>
 const BOT = "https://t.me/ophir_eliezer_bot";
+const MOM = new URLSearchParams(location.search).get("for")==="mom";
+const P = MOM ? {name:"Mom", other:"Papa", key:"mom-survey-v1", title:"Ciao, Mom", greet:"Ciao,", big:"Mom!",
+  kick:"For the house you share",
+  p1:"James's birthday gift to Papa is a helper for the house: someone you can both ask to do things, and a home that looks after itself a little.",
+  p2:"It's your home too, so James wants it to work just as well for <em>you</em>. A few questions, about five minutes. Just tap."}
+ : {name:"Papa", other:"Mom", key:"papa-survey-v1", title:"Buon Compleanno, Papa", greet:"Buon compleanno,", big:"Papa!",
+  kick:"A gift from James",
+  p1:"Your gift is a helper for the house: someone you can ask to do things, and a home that looks after itself a little.",
+  p2:"Before James sets it up, he'd love to know what <em>you</em> want. A few questions, about five minutes. Just tap."};
+document.title = P.title;
 const Q = [
  {id:"who", type:"one", kicker:"First", title:"Who's answering today?", hint:"Tap one.",
-  opts:["Papa","Mom","Both of us, together"]},
+  opts:[P.name,P.other,"Both of us, together"]},
  {id:"home", type:"many", kicker:"Around the house", title:"What would make home easier?", hint:"Tap as many as you like.",
   opts:[["Lights that turn on and off by themselves","porch, hallway, bedtime"],["Just-right temperature","without fiddling with the thermostat"],["Seeing who's at the door","from your phone or a screen"],["Locking up without getting up",""],["Keeping an eye on the house while we're away",""],["Music or the radio by asking for it",""],["Surprise me, James knows best",""]]},
  {id:"help", type:"many", kicker:"Your helper", title:"What should your helper do for you?", hint:"Pick the ones you'd actually use.",
-  opts:[["Remind me","pills, appointments, birthdays"],["Answer my questions",""],["Write or read emails and letters",""],["Print things for me","recipes, tickets, forms"],["Fix the computer when it acts up",""],["Find and share photos",""],["Keep the calendar",""],["Recipes and cooking",""],["Sports scores and news",""],["Scripture and devotions",""]]},
+  opts:[["Remind me","pills, appointments, birthdays"],["Answer my questions",""],["Write or read emails and letters",""],["Print things for me","recipes, tickets, forms"],["Fix the computer when it acts up",""],["Find, sort and share photos",""],["Stay close to family","video calls, photos of the grandkids"],["Keep the calendar",""],["Recipes and cooking",""],["Sports scores and news",""],["Scripture and devotions",""]]},
  {id:"talk", type:"many", kicker:"Talking to it", title:"How would you like to ask?", hint:"Tap all that sound good.",
   opts:[["Say it out loud","like talking to a person in the room"],["Send a text message","from my phone"],["Send an email",""],["Tap a screen on the wall or counter",""]]},
  {id:"have", type:"many", kicker:"What you have now", title:"Which of these do you use?", hint:"So James knows what's already in the house.",
   opts:["iPhone","Android phone","iPad or tablet","Windows computer","Alexa or Google speaker","Smart TV","Nest thermostat or camera","Ring or another doorbell camera","Not sure"]},
  {id:"comfort", type:"one", kicker:"Honestly", title:"How do you feel about new gadgets?", hint:"No wrong answers.",
   opts:[["Keep it simple, please","I want it to just work"],["Happy if someone shows me once",""],["I like trying new things",""]]},
+ {id:"ai", type:"one", kicker:"Talking helpers", title:"Have you ever asked a computer something?", hint:"Out loud or by typing, like Siri, Alexa or ChatGPT.",
+  opts:[["Never",""],["A few times",""],["Often","it's part of my day"]]},
+ {id:"learn", type:"one", kicker:"Your time", title:"How much time would you like to spend learning it?", hint:"Tap one.",
+  opts:[["None, it should just work",""],["A few minutes, once",""],["An afternoon with James is fine",""]]},
+ {id:"never", type:"many", kicker:"Your say", title:"Anything you'd never want it to do?", hint:"Tap any that bother you. These are rules James will set.",
+  opts:["Listen all the time","Read my email","Control the door locks","Cameras inside the house","Buy things on its own","Nothing, I trust James to set it up well"]},
  {id:"matters", type:"many", kicker:"What matters most", title:"What's most important to you?", hint:"Pick up to three.", max:3,
   opts:["Simple to use","Private and secure","Works every single time","Low monthly cost","Looks nice in the house"]},
  {id:"wish", type:"text", kicker:"Last one", title:"Anything that bugs you at home, or a wish?", hint:"Write as little or as much as you like. You can skip this."}
 ];
-const LABEL = {who:"Answering",home:"Easier at home",help:"Helper should",talk:"Ask by",have:"Has now",comfort:"Gadgets",matters:"Matters most",wish:"Wish"};
-const KEY="papa-survey-v1";
+const LABEL = {ai:"Used talking helpers",learn:"Time to learn",never:"Never do",who:"Answering",home:"Easier at home",help:"Helper should",talk:"Ask by",have:"Has now",comfort:"Gadgets",matters:"Matters most",wish:"Wish"};
+const KEY=P.key;
 let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 let i = -1; // -1 intro, 0..n-1 questions, n final
 const card=document.getElementById("card"), next=document.getElementById("next"), back=document.getElementById("back"), dots=document.getElementById("dots"), where=document.getElementById("where");
@@ -107,12 +123,12 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(A))}catch(e){}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function intro(){return `<div class="step show">
- <div class="kicker">A gift from James</div>
- <div class="script">Buon compleanno,</div>
- <h1>Papa!</h1>
+ <div class="kicker">${P.kick}</div>
+ <div class="script">${P.greet}</div>
+ <h1>${P.big}</h1>
  <div class="flourish">✦ ✦ ✦</div>
- <p>Your gift is a helper for the house: someone you can ask to do things, and a home that looks after itself a little.</p>
- <p>Before James sets it up, he'd love to know what <em>you</em> want. Eight quick questions, about three minutes. Just tap.</p>
+ <p>${P.p1}</p>
+ <p>${P.p2}</p>
  <p class="small">Nothing is sent anywhere until you choose to send it at the end.</p></div>`}
 
 function question(q){
@@ -124,7 +140,7 @@ function question(q){
 
 function summaryText(){
  const d=new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
- let t=`Papa's birthday gift answers (${d})\n`;
+ let t=`${MOM?"Mom's answers for Papa's birthday gift":"Papa's answers for his birthday gift"} (${d})\n`;
  for(const q of Q){const v=A[q.id];if(!v||(Array.isArray(v)&&!v.length))continue;t+=`\n${LABEL[q.id]}: ${Array.isArray(v)?v.join("; "):v}`}
  return t.trim()}
 function summaryHTML(){
@@ -141,8 +157,8 @@ function final(){return `<div class="step show final">
   <button class="btn ghost big" id="copy" type="button">Copy my answers</button>
   <button class="btn ghost big" id="print" type="button">Save or print a copy</button>
   <div class="flourish">✦</div>
-  <p><b style="font-family:'Playfair Display',serif;color:var(--green)">Want to say hello to EZ?</b><br>EZ is the helper who'll look after the house with you. If you have Telegram, tap below and say "Hi, it's Papa." James will let EZ know it's you.</p>
-  <a class="btn red big" href="${BOT}" target="_blank" rel="noopener">Say hello to EZ</a>
+  ${MOM?`<p><b style="font-family:'Playfair Display',serif;color:var(--green)">You already know EZ!</b><br>The same EZ who helps with your computer will help look after the house. Keep writing to him just as you do now.</p>`:`<p><b style="font-family:'Playfair Display',serif;color:var(--green)">Want to say hello to EZ?</b><br>EZ is the helper who'll look after the house with you. If you have Telegram, tap below and say "Hi, it's Papa." James will let EZ know it's you.</p>
+  <a class="btn red big" href="${BOT}" target="_blank" rel="noopener">Say hello to EZ</a>`}
  </div></div>`}
 
 function render(){
@@ -165,7 +181,7 @@ function render(){
  }
  if(i>=n){
   document.getElementById("share").onclick=async()=>{const text=summaryText();
-   if(navigator.share){try{await navigator.share({title:"Papa's answers",text});return}catch(e){if(e.name==="AbortError")return}}
+   if(navigator.share){try{await navigator.share({title:`${P.name}'s answers`,text});return}catch(e){if(e.name==="AbortError")return}}
    await copy(text);toast("Copied. Paste it into a text or email to James.")};
   document.getElementById("copy").onclick=async()=>{await copy(summaryText());toast("Copied. Paste it into a text or email.")};
   document.getElementById("print").onclick=()=>window.print();

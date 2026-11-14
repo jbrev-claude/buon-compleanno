@@ -84,11 +84,11 @@ const MOM = new URLSearchParams(location.search).get("for")==="mom";
 const P = MOM ? {name:"Mom", other:"Papa", key:"mom-survey-v1", title:"Ciao, Mom", greet:"Ciao,", big:"Mom!",
   kick:"For the house you share",
   p1:"James's birthday gift to Papa is a helper for the house: someone you can both ask to do things, and a home that looks after itself a little.",
-  p2:"It's your home too, so James wants it to work just as well for <em>you</em>. A few questions, about five minutes. Just tap."}
+  p2:"It's your home too, so James wants it to work just as well for <em>you</em>. Some quick questions, about ten minutes. Just tap."}
  : {name:"Papa", other:"Mom", key:"papa-survey-v1", title:"Buon Compleanno, Papa", greet:"Buon compleanno,", big:"Papa!",
   kick:"A gift from James",
   p1:"Your gift is a helper for the house: someone you can ask to do things, and a home that looks after itself a little.",
-  p2:"Before James sets it up, he'd love to know what <em>you</em> want. A few questions, about five minutes. Just tap."};
+  p2:"Before James sets it up, he'd love to know what <em>you</em> want. Some quick questions, about ten minutes. Just tap."};
 document.title = P.title;
 const Q = [
  {id:"who", type:"one", kicker:"First", title:"Who's answering today?", hint:"Tap one.",
@@ -109,11 +109,27 @@ const Q = [
   opts:[["None, it should just work",""],["A few minutes, once",""],["An afternoon with James is fine",""]]},
  {id:"never", type:"many", kicker:"Your say", title:"Anything you'd never want it to do?", hint:"Tap any that bother you. These are rules James will set.",
   opts:["Listen all the time","Read my email","Control the door locks","Cameras inside the house","Buy things on its own","Nothing, I trust James to set it up well"]},
+ {id:"hard", type:"many", kicker:"The hard parts", title:"Which of these give you trouble?", hint:"Tap any. The helper's first job is to take these off your plate.",
+  opts:["Passwords and signing in","The printer","Updates and pop-ups on the computer","Phone settings","Scam calls, texts and emails","TV remotes and streaming apps","Keeping track of photos","None of these"]},
+ {id:"voice", type:"one", kicker:"Its personality", title:"How should your helper talk to you?", hint:"Pick the one you'd enjoy most.",
+  opts:[["Warm and chatty","like a friend stopping by"],["Short and to the point",""],["Cheerful, with a little humor",""],["Calm and patient","like a good neighbor"]]},
+ {id:"explain", type:"one", kicker:"When you ask for help", title:"What's your favorite way to be helped?", hint:"Tap one.",
+  opts:[["Just do it for me",""],["Show me step by step, slowly",""],["Do it, and tell me why",""]]},
+ {id:"unsure", type:"one", kicker:"When it isn't sure", title:"If the helper isn't sure what you meant, it should…", hint:"Tap one.",
+  opts:[["Ask me first",""],["Make its best guess, then tell me",""],["Check with James",""]]},
+ {id:"first", type:"many", kicker:"Speaking up", title:"Should the helper ever speak up first?", hint:"Tap any you'd like.",
+  opts:[["A short good-morning with the day's plan",""],["Reminders before things I might forget",""],["Heads-ups when something's wrong at the house","door left open, water, power out"],["Only when I ask","otherwise stay quiet"]]},
+ {id:"alert", type:"many", kicker:"If something's wrong", title:"Who should hear about a problem at the house?", hint:"Like a door left open or the power out.",
+  opts:["Me",P.other,"James","Nobody, just fix it if you can"]},
+ {id:"day", type:"one", kicker:"Your day", title:"When are you usually up and about?", hint:"So reminders come at good times.",
+  opts:[["Early bird","up before 7"],["Mid-morning",""],["Night owl",""]]},
+ {id:"italian", type:"one", kicker:"Un po' d'italiano", title:"Should your helper ever speak Italian?", hint:"Just for fun.",
+  opts:[["English only, please",""],["Sprinkle in a little Italian",""],["Help me practice my Italian",""]]},
  {id:"matters", type:"many", kicker:"What matters most", title:"What's most important to you?", hint:"Pick up to three.", max:3,
   opts:["Simple to use","Private and secure","Works every single time","Low monthly cost","Looks nice in the house"]},
  {id:"wish", type:"text", kicker:"Last one", title:"Anything that bugs you at home, or a wish?", hint:"Write as little or as much as you like. You can skip this."}
 ];
-const LABEL = {ai:"Used talking helpers",learn:"Time to learn",never:"Never do",who:"Answering",home:"Easier at home",help:"Helper should",talk:"Ask by",have:"Has now",comfort:"Gadgets",matters:"Matters most",wish:"Wish"};
+const LABEL = {hard:"Trouble with",voice:"Helper should sound",explain:"Likes help that",unsure:"When unsure",first:"Speak up first",alert:"Problems go to",day:"Usually up",italian:"Italian",ai:"Used talking helpers",learn:"Time to learn",never:"Never do",who:"Answering",home:"Easier at home",help:"Helper should",talk:"Ask by",have:"Has now",comfort:"Gadgets",matters:"Matters most",wish:"Wish"};
 const KEY=P.key;
 let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 let i = -1; // -1 intro, 0..n-1 questions, n final

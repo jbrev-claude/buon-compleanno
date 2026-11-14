@@ -98,7 +98,7 @@ const Q = [
  {id:"help", type:"many", kicker:"Your helper", title:"What should your helper do for you?", hint:"Pick the ones you'd actually use.",
   opts:[["Remind me","pills, appointments, birthdays"],["Answer my questions",""],["Write or read emails and letters",""],["Print things for me","recipes, tickets, forms"],["Fix the computer when it acts up",""],["Find, sort and share photos",""],["Stay close to family","video calls, photos of the grandkids"],["Keep the calendar",""],["Recipes and cooking",""],["Sports scores and news",""],["Scripture and devotions",""]]},
  {id:"talk", type:"many", kicker:"Talking to it", title:"How would you like to ask?", hint:"Tap all that sound good.",
-  opts:[["Say it out loud","like talking to a person in the room"],["Send a text message","from my phone"],["Send an email",""],["Tap a screen on the wall or counter",""]]},
+  opts:[["Say it out loud","like talking to a person in the room"],["Leave a voice message","talk instead of typing"],["Send a text message","from my phone"],["Send an email",""],["Tap a screen on the wall or counter",""]]},
  {id:"have", type:"many", kicker:"What you have now", title:"Which of these do you use?", hint:"So James knows what's already in the house.",
   opts:["iPhone","Android phone","iPad or tablet","Windows computer","Alexa or Google speaker","Smart TV","Nest thermostat or camera","Ring or another doorbell camera","Not sure"]},
  {id:"comfort", type:"one", kicker:"Honestly", title:"How do you feel about new gadgets?", hint:"No wrong answers.",
@@ -107,8 +107,14 @@ const Q = [
   opts:[["Never",""],["A few times",""],["Often","it's part of my day"]]},
  {id:"learn", type:"one", kicker:"Your time", title:"How much time would you like to spend learning it?", hint:"Tap one.",
   opts:[["None, it should just work",""],["A few minutes, once",""],["An afternoon with James is fine",""]]},
+ {id:"often", type:"one", kicker:"Your time", title:"How often would you use it?", hint:"Your best guess.",
+  opts:[["Now and then","when something comes up"],["A little every day",""],["All through the day",""]]},
+ {id:"cost", type:"one", kicker:"The budget", title:"What would you be glad to pay each month?", hint:"For the helper and any services. Tap one.",
+  opts:[["Nothing, keep it free",""],["Up to about $10",""],["Up to about $25",""],["Whatever makes it work well",""],["Let James decide",""]]},
  {id:"never", type:"many", kicker:"Your say", title:"Anything you'd never want it to do?", hint:"Tap any that bother you. These are rules James will set.",
   opts:["Listen all the time","Read my email","Control the door locks","Cameras inside the house","Buy things on its own","Nothing, I trust James to set it up well"]},
+ {id:"james", type:"many", kicker:"James's part", title:"What should James be able to see?", hint:"So he can help without stepping on your privacy. Tap any.",
+  opts:["Problems at the house, like a door open or power out","What I ask the helper","My settings, so he can fix things","Everything, I trust him","Nothing without asking me first"]},
  {id:"hard", type:"many", kicker:"The hard parts", title:"Which of these give you trouble?", hint:"Tap any. The helper's first job is to take these off your plate.",
   opts:["Passwords and signing in","The printer","Updates and pop-ups on the computer","Phone settings","Scam calls, texts and emails","TV remotes and streaming apps","Keeping track of photos","None of these"]},
  {id:"voice", type:"one", kicker:"Its personality", title:"How should your helper talk to you?", hint:"Pick the one you'd enjoy most.",
@@ -129,7 +135,7 @@ const Q = [
   opts:["Simple to use","Private and secure","Works every single time","Low monthly cost","Looks nice in the house"]},
  {id:"wish", type:"text", kicker:"Last one", title:"Anything that bugs you at home, or a wish?", hint:"Write as little or as much as you like. You can skip this."}
 ];
-const LABEL = {hard:"Trouble with",voice:"Helper should sound",explain:"Likes help that",unsure:"When unsure",first:"Speak up first",alert:"Problems go to",day:"Usually up",italian:"Italian",ai:"Used talking helpers",learn:"Time to learn",never:"Never do",who:"Answering",home:"Easier at home",help:"Helper should",talk:"Ask by",have:"Has now",comfort:"Gadgets",matters:"Matters most",wish:"Wish"};
+const LABEL = {hard:"Trouble with",voice:"Helper should sound",explain:"Likes help that",unsure:"When unsure",first:"Speak up first",alert:"Problems go to",day:"Usually up",italian:"Italian",ai:"Used talking helpers",learn:"Time to learn",often:"Would use it",cost:"Monthly budget",james:"James may see",never:"Never do",who:"Answering",home:"Easier at home",help:"Helper should",talk:"Ask by",have:"Has now",comfort:"Gadgets",matters:"Matters most",wish:"Wish"};
 const KEY=P.key;
 let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 let i = -1; // -1 intro, 0..n-1 questions, n final

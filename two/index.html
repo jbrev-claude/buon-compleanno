@@ -127,6 +127,8 @@ const ALL = [
   opts:[["👍","Just like this",""],["✂️","Shorter, please",""],["➕","Good, but add something","tell us below"]], note:"What would you add or change? (optional)"},
  {id:"when", who:"both", type:"one", kicker:"The good-morning text", title:"When should it arrive?", hint:"Tap one.",
   opts:[["🌅","Around 6 AM",""],["☕","Around 7 AM",""],["🍳","Around 8 AM",""]]},
+ {id:"cal", who:"both", type:"many", kicker:"The day's plan", title:"The good-morning text lists your day. Where do your appointments live now?", hint:"Tap any.",
+  opts:[["📱","The Calendar app on my iPhone",""],["📒","A paper calendar",""],["💭","In my head",""],["💑",`${P.other} keeps track of them`,""]], note:"Anything else? (for example, a shared calendar)"},
  {id:"headsup", who:"both", type:"many", kicker:"Heads-ups", title:"Which heads-ups would you want?", hint:"Tap any. James will tell you which ones the house can do.",
   opts:[["🚪","A door or the garage left open at night",""],["🔔","Someone at the front door",""],["📦","A package delivered",""],["🌡️","The house too hot or too cold",""],["⚡","The power went out",""]]},
  {id:"channel", who:"both", type:"one", kicker:"Where the texts come", title:"Your helper's texts could come in either of these. Which is fine with you?", hint:"Both work the same. Telegram is free, and James sets it up. Messages may cost a little each month, so James would check first.", preview:()=>CHANNEL,
@@ -138,7 +140,7 @@ const ALL = [
  {id:"wish", who:"both", type:"text", kicker:"Last one", title:"Anything else James should know?", hint:"Write as little or as much as you like. You can skip this."}
 ];
 const Q = ALL.filter(q=>q.who==="both"||q.who===(MOM?"mom":"papa"));
-const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",headsup:"Heads-ups",channel:"Texts come in",talk:"Talking",first3:"First three",wish:"Anything else"};
+const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",cal:"Appointments live in",headsup:"Heads-ups",channel:"Texts come in",talk:"Talking",first3:"First three",wish:"Anything else"};
 const KEY=P.key;
 let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 let i = -1; // -1 intro, 0..n-1 questions, n final

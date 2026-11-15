@@ -68,6 +68,12 @@ textarea:focus,.opt:focus-visible,.btn:focus-visible{outline:3px solid rgba(47,1
 .note textarea{min-height:80px;font-size:19px}
 .note label{display:block;color:var(--brown);font-style:italic;font-size:18px;margin-bottom:6px}
 .preview{margin:0 0 16px}
+.casa{background:#F8F5EE;border:1.5px solid var(--line);border-radius:18px;overflow:hidden;font:400 14px/1.3 -apple-system,'Helvetica Neue',Arial,sans-serif;color:#222}
+.casa .cb{background:#2F5D3A;color:#fff;font-weight:600;padding:9px 14px;display:flex;gap:18px}.casa .cb span{opacity:.7}
+.casa .hi{text-align:center;font:700 22px -apple-system,'Helvetica Neue',Arial,sans-serif;margin:10px 0 2px}
+.casa .wx{text-align:center;color:#555;margin-bottom:8px}
+.casa .tiles{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:0 10px 12px}
+.casa .t{background:#fff;border:1px solid #e4ddd0;border-radius:10px;padding:8px}.casa .t b{display:block;font-size:13.5px}
 .phone{background:#fff;border:1.5px solid var(--line);border-radius:22px;padding:10px 10px 14px;font:400 15.5px/1.35 -apple-system,'Helvetica Neue',Arial,sans-serif;color:#111}
 .phone .bar{display:flex;align-items:center;gap:8px;padding:2px 4px 8px;border-bottom:1px solid #eee;margin-bottom:10px;font-weight:600;font-size:14px}
 .phone .av{width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
@@ -103,11 +109,11 @@ const MOM = new URLSearchParams(location.search).get("for")==="mom";
 const P = MOM ? {name:"Mom", other:"Papa", key:"mom-survey2-v1", title:"Grazie, Mom", greet:"Grazie,", big:"Mom!",
   kick:"Part two",
   p1:"Thank you for your answers. James read every one, and they've already shaped the plan.",
-  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About three minutes."}
+  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About four minutes."}
  : {name:"Papa", other:"Mom", key:"papa-survey2-v1", title:"Grazie, Papa", greet:"Grazie,", big:"Papa!",
   kick:"Part two",
   p1:"Thank you for your answers. James read every one, and they've already shaped the plan.",
-  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About five minutes."};
+  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About six minutes."};
 document.title = P.title;
 const MORNING = `<div class="phone"><div class="bar"><span class="av">EZ</span>EZ<span class="tag">6:45 AM</span></div>
  <div class="bub">Good morning! ☀️ Sunny and 68° today.<br>• Dentist at 10:30<br>• Trash goes out tonight<br><br>"This is the day that the LORD has made; let us rejoice and be glad in it." Psalm 118:24</div></div>`;
@@ -118,6 +124,10 @@ const CHANNEL = `<div class="twin">
  <div><div class="phone im"><div class="bar"><span class="av">EZ</span>EZ</div>
   <div class="bub">Good morning! Dentist at 10:30 today.</div><div class="bub mine">Thanks! Remind me at 10</div><div class="bub">Will do 👍</div></div>
   <div class="cap">Messages</div></div></div>`;
+const CASA = `<div class="casa"><div class="cb">Texas house<span>California house</span></div>
+ <div class="hi">Buongiorno!</div><div class="wx">⛅ Partly cloudy, 62°</div>
+ <div class="tiles"><div class="t"><b>🚪 Front door</b>See who's there</div><div class="t"><b>🛡️ Alarm</b>Set or not, view only</div>
+ <div class="t"><b>💊 Reminders</b>Pills, birthdays</div><div class="t"><b>🛒 Grocery list</b>Add as you go</div></div></div>`;
 const ALL = [
  {id:"locks", who:"both", type:"one", kicker:"The door locks", title:"You'd like locking up made easy, but the helper should never control the locks. Which is closest?", hint:"Tap one.",
   opts:[["🔔","Text me at bedtime if a door is unlocked","I'll lock it myself"],["📱","Let me lock it from my phone","only when I tap, never on its own"],["🚪","Leave the locks out of it",""]]},
@@ -131,6 +141,10 @@ const ALL = [
   opts:[["📱","The Calendar app on my iPhone",""],["📒","A paper calendar",""],["💭","In my head",""],["💑",`${P.other} keeps track of them`,""]], note:"Anything else? (for example, a shared calendar)"},
  {id:"headsup", who:"both", type:"many", kicker:"Heads-ups", title:"Which heads-ups would you want?", hint:"Tap any. James will tell you which ones the house can do.",
   opts:[["🚪","A door or the garage left open at night",""],["🔔","Someone at the front door",""],["📦","A package delivered",""],["🌡️","The house too hot or too cold",""],["⚡","The power went out",""]]},
+ {id:"casa", who:"both", type:"one", kicker:"Casa, your home screen", title:"James is making you a home screen called Casa. It works on your phone, iPad or computer. How would you use it?", hint:"Here's a rough sample. Tap one.", preview:()=>CASA,
+  opts:[["👀","I'd look at it most days",""],["👆","Now and then, when I need something",""],["🙅","I'd rather just get texts",""]]},
+ {id:"casashow", who:"both", type:"many", max:4, chips:true, kicker:"Casa, your home screen", title:"What would you most want to see on it? Pick up to four.", hint:"We'll put these at the top.",
+  opts:[["🌤️","Weather"],["🚪","Who's at the door"],["🛡️","Alarm on or off"],["🌡️","House temperature"],["📶","Wi-Fi working"],["🎵","Music on the soundbar"],["💊","Reminders"],["📅","Today's plan"],["🛒","Grocery list"],["📷","Photos of the grandkids"],["💬","A button to ask EZ"]], note:"Anything else you'd want on it?"},
  {id:"channel", who:"both", type:"one", kicker:"Where the texts come", title:"Your helper's texts could come in either of these. Which is fine with you?", hint:"Both work the same. Telegram is free, and James sets it up. Messages may cost a little each month, so James would check first.", preview:()=>CHANNEL,
   opts:[["✈️","Telegram is fine","set it up for me"],["💬","Only my Messages app",""],["🤷","Either one, James decides",""]]},
  {id:"talk", who:"papa", type:"one", kicker:"Talking to it", title:"You'd like to just say it, but it should never be listening. Which fits?", hint:"Tap one.",
@@ -140,7 +154,7 @@ const ALL = [
  {id:"wish", who:"both", type:"text", kicker:"Last one", title:"Anything else James should know?", hint:"Write as little or as much as you like. You can skip this."}
 ];
 const Q = ALL.filter(q=>q.who==="both"||q.who===(MOM?"mom":"papa"));
-const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",cal:"Appointments live in",headsup:"Heads-ups",channel:"Texts come in",talk:"Talking",first3:"First three",wish:"Anything else"};
+const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",cal:"Appointments live in",headsup:"Heads-ups",casa:"Would use Casa",casashow:"On Casa",channel:"Texts come in",talk:"Talking",first3:"First three",wish:"Anything else"};
 const KEY=P.key;
 let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 let i = -1; // -1 intro, 0..n-1 questions, n final

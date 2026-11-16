@@ -68,6 +68,11 @@ textarea:focus,.opt:focus-visible,.btn:focus-visible{outline:3px solid rgba(47,1
 .note textarea{min-height:80px;font-size:19px}
 .note label{display:block;color:var(--brown);font-style:italic;font-size:18px;margin-bottom:6px}
 .preview{margin:0 0 16px}
+.mic{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:0 0 12px;font:600 20px 'Playfair Display',serif;color:#fff;background:var(--red);border:0;border-radius:40px;min-height:62px;cursor:pointer}
+.mic.on{background:var(--green);animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,122,69,.5)}50%{box-shadow:0 0 0 10px rgba(47,122,69,0)}}
+.mic .sec{font:600 17px 'Cormorant Garamond',serif;opacity:.9}
+.dump textarea{min-height:190px}
 .casa{background:#F8F5EE;border:1.5px solid var(--line);border-radius:18px;overflow:hidden;font:400 14px/1.3 -apple-system,'Helvetica Neue',Arial,sans-serif;color:#222}
 .casa .cb{background:#2F5D3A;color:#fff;font-weight:600;padding:9px 14px;display:flex;gap:18px}.casa .cb span{opacity:.7}
 .casa .hi{text-align:center;font:700 22px -apple-system,'Helvetica Neue',Arial,sans-serif;margin:10px 0 2px}
@@ -109,11 +114,11 @@ const MOM = new URLSearchParams(location.search).get("for")==="mom";
 const P = MOM ? {name:"Mom", other:"Papa", key:"mom-survey2-v1", title:"Grazie, Mom", greet:"Grazie,", big:"Mom!",
   kick:"Part two",
   p1:"Thank you for your answers. James read every one, and they've already shaped the plan.",
-  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About four minutes."}
+  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About five minutes."}
  : {name:"Papa", other:"Mom", key:"papa-survey2-v1", title:"Grazie, Papa", greet:"Grazie,", big:"Papa!",
   kick:"Part two",
   p1:"Thank you for your answers. James read every one, and they've already shaped the plan.",
-  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About six minutes."};
+  p2:"A few of them we'd like to get exactly right, so here are a few short questions, with pictures. About seven minutes."};
 document.title = P.title;
 const MORNING = `<div class="phone"><div class="bar"><span class="av">EZ</span>EZ<span class="tag">6:45 AM</span></div>
  <div class="bub">Good morning! ☀️ Sunny and 68° today.<br>• Dentist at 10:30<br>• Trash goes out tonight<br><br>"This is the day that the LORD has made; let us rejoice and be glad in it." Psalm 118:24</div></div>`;
@@ -149,12 +154,16 @@ const ALL = [
   opts:[["✈️","Telegram is fine","set it up for me"],["💬","Only my Messages app",""],["🤷","Either one, James decides",""]]},
  {id:"talk", who:"papa", type:"one", kicker:"Talking to it", title:"You'd like to just say it, but it should never be listening. Which fits?", hint:"Tap one.",
   opts:[["🎙️","I record a voice message on my phone and send it",""],["🔘","I press a button, then talk",""],["⌨️","Typing is fine for now",""]]},
- {id:"first3", who:"papa", type:"many", max:3, chips:true, kicker:"Your list", title:"Pick the three you'd use first.", hint:"We'll start there and add the rest over time.",
-  opts:[["🛒","Grocery list"],["✅","To-do list"],["📅","Calendar"],["🩺","Doctor visits"],["🚗","Car upkeep"],["🐕","Cooper's health"],["📧","Junk email"],["🏃","Exercise"],["🔨","Home projects"],["✈️","Trips"],["👨‍👩‍👧","Family follow-up"],["🎬","Movies"],["📚","Books"],["🌱","Growing: body, mind, spirit"]]},
- {id:"wish", who:"both", type:"text", kicker:"Last one", title:"Anything else James should know?", hint:"Write as little or as much as you like. You can skip this."}
+ {id:"mylist", who:"papa", type:"many", max:3, chips:true, kicker:"Your list", title:"Thank you for your list! Which three should EZ help with first?", hint:"These come from your email. We'll start there and add the rest over time.",
+  opts:[["🎄","Christmas lights"],["🏠","Roof repair"],["🪧","Selling Big Pine"],["🌿","Backyard and yard work"],["🔨","Garage remodel"],["🩺","Doctor visits and prescriptions"],["🏃","Exercise routine"],["🚗","Grammie's Lexus"],["✈️","Trips, 2027 and 2028"],["🍖","Holiday menus"],["👨‍👩‍👧","Family follow-up"],["🇮🇹","Italian lessons"]], note:"Anything missing, or anything we got wrong?"},
+ {id:"listhow", who:"both", type:"one", kicker:"Your lists", title:"How would you most like to see and change your lists?", hint:MOM?"Tap one.":"You said a PDF won't let you edit, and copy and paste loses the formatting. Which would be easiest? Tap one.",
+  opts:[["💬","Just tell EZ","by text or voice, and EZ keeps the list neat"],["👆","A page I can tap and change","on my phone, iPad or computer"],["📊","A spreadsheet I can edit","like Excel or Google Sheets"],["🖨️","A printed page I can mark up","EZ types in my changes"]], note:"Anything that bothers you about how you keep lists now?"},
+ {id:"screen", who:"both", type:"many", chips:true, kicker:"Your lists", title:"Where would you look at them?", hint:"Tap any.",
+  opts:[["📱","iPhone"],["📲","iPad"],["💻","Computer"],["📺","The TV"],["📄","On paper"]]},
+ {id:"wish", who:"both", type:"text", voice:true, kicker:"Last one", title:"Talk for 30 seconds: anything on your mind about all this.", hint:"Tap the red button and just talk. Your words show up below, and you can fix them by typing. Or tap the microphone on your keyboard. You can skip this."}
 ];
 const Q = ALL.filter(q=>q.who==="both"||q.who===(MOM?"mom":"papa"));
-const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",cal:"Appointments live in",headsup:"Heads-ups",casa:"Would use Casa",casashow:"On Casa",channel:"Texts come in",talk:"Talking",first3:"First three",wish:"Anything else"};
+const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",cal:"Appointments live in",headsup:"Heads-ups",casa:"Would use Casa",casashow:"On Casa",channel:"Texts come in",talk:"Talking",mylist:"Help first",listhow:"Lists, best way",screen:"Lists, where",wish:"On my mind"};
 const KEY=P.key;
 let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 let i = -1; // -1 intro, 0..n-1 questions, n final
@@ -175,7 +184,7 @@ function intro(){return `<div class="step show">
 function question(q){
  let h=`<div class="step show"><div class="kicker">${q.kicker}</div><h2>${q.title}</h2><p class="hint">${q.hint}</p>`;
  if(q.preview)h+=`<div class="preview">${q.preview()}</div>`;
- if(q.type==="text"){h+=`<textarea id="t" placeholder="Type here…">${esc(A[q.id]||"")}</textarea>`}
+ if(q.type==="text"){h+=`<div class="dump">${q.voice&&SR?`<button type="button" class="mic" id="mic">🎙️ <span id="micl">Tap and talk</span> <span class="sec" id="sec"></span></button>`:""}<textarea id="t" placeholder="${q.voice?"Your words go here…":"Type here…"}">${esc(A[q.id]||"")}</textarea></div>`}
  else{h+=`<div class="opts ${q.chips?"chips":""}">`+q.opts.map(o=>{const [e,t,s]=o;const on=q.type==="one"?A[q.id]===t:(A[q.id]||[]).includes(t);
    return `<button type="button" class="opt ${q.type==="one"?"radio":""}" aria-pressed="${on}" data-v="${esc(t)}"><span class="box">${tick}</span><span class="em">${e}</span><span>${esc(t)}${s?`<small>${esc(s)}</small>`:""}</span></button>`}).join("")+`</div>`;
   if(q.note)h+=`<div class="note"><label for="n">${esc(q.note)}</label><textarea id="n" placeholder="Type here…">${esc(A[q.id+"_note"]||"")}</textarea></div>`}
@@ -214,7 +223,7 @@ function render(){
  if(i>=0&&i<n){
   const q=Q[i];
   const nb=document.getElementById("n");if(nb)nb.oninput=()=>{A[q.id+"_note"]=nb.value;save()};
-  if(q.type==="text"){const t=document.getElementById("t");t.oninput=()=>{A.wish=t.value;save();next.textContent=t.value.trim()?"Finish":"Skip and finish"}}
+  if(q.type==="text"){const t=document.getElementById("t");t.oninput=()=>{A.wish=t.value;save();next.textContent=t.value.trim()?"Finish":"Skip and finish"};const m=document.getElementById("mic");if(m)m.onclick=()=>rec?stopRec():startRec(t,m)}
   card.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
    const v=b.dataset.v;
    if(q.type==="one"){A[q.id]=v;card.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-pressed",x===b));save();if(!q.note)setTimeout(()=>{if(i<n&&Q[i]===q)go(1)},380);return}
@@ -231,9 +240,28 @@ function render(){
  }
  window.scrollTo({top:0,behavior:"smooth"});
 }
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null,recT=null,recWant=false,recSec=0;
+function session(t){
+ // one recognizer run; Safari ends runs on pauses, so a new one starts while recWant holds
+ const r=new SR();rec=r;r.lang="en-US";r.continuous=true;r.interimResults=true;
+ const base=t.value.trim();
+ r.onresult=e=>{let said="";for(let k=0;k<e.results.length;k++)said+=e.results[k][0].transcript;
+  t.value=[base,said.trim()].filter(Boolean).join(" ");A.wish=t.value;save();next.textContent="Finish"};
+ r.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed"){stopRec();toast("The microphone is off. Tap the mic on your keyboard instead.")}};
+ r.onend=()=>{if(recWant&&rec===r){try{session(t)}catch(e){stopRec()}}};
+ r.start()}
+function startRec(t,m){
+ if(!SR)return;recWant=true;recSec=0;
+ try{session(t)}catch(e){recWant=false;toast("Tap the mic on your keyboard instead.");return}
+ m.classList.add("on");document.getElementById("micl").textContent="Listening… tap to stop";
+ const sec=document.getElementById("sec");sec.textContent="0s";
+ recT=setInterval(()=>{recSec++;sec.textContent=recSec<30?`${recSec}s`:`${recSec}s · keep going if you like`;if(recSec>=180)stopRec()},1000)}
+function stopRec(){recWant=false;clearInterval(recT);recT=null;if(rec){try{rec.stop()}catch(e){}rec=null}
+ const m=document.getElementById("mic");if(m){m.classList.remove("on");document.getElementById("micl").textContent="Tap to talk again";document.getElementById("sec").textContent=""}}
 async function copy(t){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}}
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("on"),2600)}
-function go(d){i=Math.max(-1,Math.min(Q.length,i+d));render()}
+function go(d){stopRec();i=Math.max(-1,Math.min(Q.length,i+d));render()}
 next.onclick=()=>go(1);back.onclick=()=>go(-1);
 render();
 </script>

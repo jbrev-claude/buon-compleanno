@@ -150,8 +150,8 @@ const ALL = [
   opts:[["👀","I'd look at it most days",""],["👆","Now and then, when I need something",""],["🙅","I'd rather just get texts",""]]},
  {id:"casashow", who:"both", type:"many", max:4, chips:true, kicker:"Casa, your home screen", title:"What would you most want to see on it? Pick up to four.", hint:"We'll put these at the top.",
   opts:[["🌤️","Weather"],["🚪","Who's at the door"],["🛡️","Alarm on or off"],["🌡️","House temperature"],["📶","Wi-Fi working"],["🎵","Music on the soundbar"],["💊","Reminders"],["📅","Today's plan"],["🛒","Grocery list"],["📷","Photos of the grandkids"],["💬","A button to ask EZ"]], note:"Anything else you'd want on it?"},
- {id:"channel", who:"both", type:"one", kicker:"Where the texts come", title:"Your helper's texts could come in either of these. Which is fine with you?", hint:"Both work the same. Telegram is free, and James sets it up. Messages may cost a little each month, so James would check first.", preview:()=>CHANNEL,
-  opts:[["✈️","Telegram is fine","set it up for me"],["💬","Only my Messages app",""],["🤷","Either one, James decides",""]]},
+ {id:"channel", who:"both", type:"one", kicker:"Texting EZ", title:"Would you like to try texting EZ on Telegram?", hint:"It's a free texting app, a lot like Messages. James sets it up on your phone, and you can text EZ anytime, ask anything, or send a voice message. Here's what it looks like.", preview:()=>CHANNEL,
+  opts:[["✈️","Yes, let's try it","James sets it up for me"],["⏳","Maybe later",""],["💬","I'd rather use my Messages app",""]], note:"Any questions or worries about it?"},
  {id:"talk", who:"papa", type:"one", kicker:"Talking to it", title:"You'd like to just say it, but it should never be listening. Which fits?", hint:"Tap one.",
   opts:[["🎙️","I record a voice message on my phone and send it",""],["🔘","I press a button, then talk",""],["⌨️","Typing is fine for now",""]]},
  {id:"mylist", who:"papa", type:"many", max:3, chips:true, kicker:"Your list", title:"Thank you for your list! Which three should EZ help with first?", hint:"These come from your email. We'll start there and add the rest over time.",
@@ -163,7 +163,7 @@ const ALL = [
  {id:"wish", who:"both", type:"text", voice:true, kicker:"Last one", title:"Talk for 30 seconds: anything on your mind about all this.", hint:"Tap the red button and just talk. Your words show up below, and you can fix them by typing. Or tap the microphone on your keyboard. You can skip this."}
 ];
 const Q = ALL.filter(q=>q.who==="both"||q.who===(MOM?"mom":"papa"));
-const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",cal:"Appointments live in",headsup:"Heads-ups",casa:"Would use Casa",casashow:"On Casa",channel:"Texts come in",talk:"Talking",mylist:"Help first",listhow:"Lists, best way",screen:"Lists, where",wish:"On my mind"};
+const LABEL = {locks:"Door locks",garage:"Garage after 7 PM",morning:"Morning text",when:"Morning text at",cal:"Appointments live in",headsup:"Heads-ups",casa:"Would use Casa",casashow:"On Casa",channel:"Try Telegram with EZ",talk:"Talking",mylist:"Help first",listhow:"Lists, best way",screen:"Lists, where",wish:"On my mind"};
 const KEY=P.key;
 let A = {}; try{A=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 let i = -1; // -1 intro, 0..n-1 questions, n final
